@@ -1,17 +1,20 @@
 class Solution {
     public int uniquePaths(int m, int n) {
-        int dp[][] = new int[m+1][n+1];
+        int prev[] = new int[n+1];
         for(int i=1;i<m+1;i++){
-            for(int j=0; j<n+1; j++){
+            int cur[] = new int[n+1];
+            for(int j=0;j<n+1;j++){
                 if(i==0 || j==0){
-                    dp[i][j]=0;
+                    cur[j] = 0;
                 }else if(i==1 && j==1){
-                    dp[i][j]=1;
+                    cur[j] = 1;
                 }else{
-                    dp[i][j]=dp[i-1][j]+dp[i][j-1];
-                }
+                    cur[j] = prev[j] + cur[j-1]; //recur(m-1,n, dp) + recur(m,n-1, dp); 
                 }
             }
-            return dp[m][n];
+            prev = cur;
         }
+        return prev[n]; //recur(m,n, dp);
     }
+
+}
